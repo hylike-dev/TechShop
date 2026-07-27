@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Danh Mục - TechShop Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .admin-sidebar { min-height: 100vh; background: #1e293b; color: #fff; }
+        .admin-sidebar a { color: #cbd5e1; padding: 12px 20px; display: block; text-decoration: none; font-weight: 500; border-radius: 8px; margin-bottom: 4px; }
+        .admin-sidebar a:hover, .admin-sidebar a.active { background: #0d6efd; color: #fff; }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 p-3 admin-sidebar">
+            <div class="d-flex align-items-center gap-2 mb-4 px-2">
+                <i class="fas fa-microchip text-primary fa-2x"></i>
+                <h5 class="fw-bold m-0 text-white">Tech<span class="text-primary">Admin</span></h5>
+            </div>
+            <hr class="border-secondary">
+            <nav class="mt-3">
+                <a th:href="@{/admin}"><i class="fas fa-chart-line me-2"></i> Dashboard</a>
+                <a th:href="@{/admin/products}"><i class="fas fa-mobile-alt me-2"></i> Quản Lý Sản Phẩm</a>
+                <a th:href="@{/admin/categories}" class="active"><i class="fas fa-list me-2"></i> Quản Lý Danh Mục</a>
+                <a th:href="@{/admin/orders}"><i class="fas fa-shopping-cart me-2"></i> Quản Lý Đơn Hàng</a>
+                <a th:href="@{/admin/accounts}"><i class="fas fa-users me-2"></i> Quản Lý Tài Khoản</a>
+                <a th:href="@{/admin/banners}"><i class="fas fa-images me-2"></i> Quản Lý Banner</a>
+                <a th:href="@{/admin/promotions}"><i class="fas fa-ticket-alt me-2"></i> Khuyến Mãi / Voucher</a>
+                <hr class="border-secondary my-3">
+                <a th:href="@{/}" class="text-warning"><i class="fas fa-external-link-alt me-2"></i> Xem Trang Web</a>
+            </nav>
+        </div>
+
+        <div class="col-md-9 col-lg-10 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold m-0 text-dark">Quản Lý Danh Mục Thiết Bị</h3>
+                <button class="btn btn-primary fw-bold"><i class="fas fa-plus me-1"></i> Thêm Danh Mục</button>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên Danh Mục</th>
+                            <th>Mô Tả Short</th>
+                            <th>Số Lượng Sản Phẩm</th>
+                            <th>Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><strong>Điện thoại (Smartphones)</strong></td>
+                            <td>iPhone, Samsung Galaxy, Xiaomi</td>
+                            <td><span class="badge bg-primary">48 sản phẩm</span></td>
+                            <td><button class="btn btn-sm btn-outline-primary me-1">Sửa</button><button class="btn btn-sm btn-outline-danger">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><strong>Laptop & PC Workstation</strong></td>
+                            <td>MacBook, ASUS ROG, Dell XPS</td>
+                            <td><span class="badge bg-primary">32 sản phẩm</span></td>
+                            <td><button class="btn btn-sm btn-outline-primary me-1">Sửa</button><button class="btn btn-sm btn-outline-danger">Xóa</button></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><strong>Âm Thanh & Tai Nghe</strong></td>
+                            <td>Sony, AirPods, JBL, Marshall</td>
+                            <td><span class="badge bg-primary">24 sản phẩm</span></td>
+                            <td><button class="btn btn-sm btn-outline-primary me-1">Sửa</button><button class="btn btn-sm btn-outline-danger">Xóa</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

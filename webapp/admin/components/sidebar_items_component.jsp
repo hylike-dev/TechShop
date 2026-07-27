@@ -1,0 +1,394 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/admin_css/admin_sidebar.css?v=1.0.3">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/admin/admin_css/admin_darkmode.css?v=1.0.0">
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<c:set var="perms" value="${sessionScope.userPermissions}" />
+
+<c:set var="canViewCategory" value="${fn:contains(perms, 'category:read')}" />
+<c:set var="canViewProduct" value="${fn:contains(perms, 'product:read')}" />
+<c:set var="canViewManufacturer" value="${fn:contains(perms, 'manufacturer:read')}" />
+
+<c:set var="canViewOrder" value="${fn:contains(perms, 'orders:read')}" />
+<c:set var="canViewReview" value="${fn:contains(perms, 'review:read')}" />
+
+<c:set var="canViewBanner" value="${fn:contains(perms, 'banner:read')}" />
+<c:set var="canViewBlog" value="${fn:contains(perms, 'blog:read')}" />
+
+<c:set var="canViewInventory" value="${fn:contains(perms, 'inventory:read')}" />
+
+<c:set var="canViewAccount" value="${fn:contains(perms, 'account:read')}" />
+<c:set var="canViewStaff" value="${fn:contains(perms, 'staff:read')}" />
+<c:set var="canViewRole" value="${fn:contains(perms, 'role:read')}" />
+
+<c:set var="canViewPromotion" value="${fn:contains(perms, 'promotion:read')}" />
+<c:set var="canViewFiles" value="${fn:contains(perms, 'file:read')}" />
+
+<div class="group-avatar-new">
+    <div class="admin-sidebar-header">
+
+        <div class="admin-name" id="avatar-modal-btn" style="cursor: pointer;" title="Nhấn để cài đặt / đăng xuất">
+            <c:out value="${not empty sessionScope.user.fullName ? sessionScope.user.fullName : 'ADMIN'}" />
+        </div>
+
+        <div class="admin-quick-links">
+            <a href="${pageContext.request.contextPath}/logout" class="quick-link">Đăng Xuất</a>
+            <span class="quick-link-separator">|</span>
+            <a href="#" class="quick-link" id="clear-cache-link">Xóa cache</a>
+        </div>
+    </div>
+
+    <div class="sidebar-section-title">
+        CHỨC NĂNG HỆ THỐNG
+    </div>
+</div>
+
+<li>
+    <a href="${pageContext.request.contextPath}/dashboard"
+       class="a-with-icon ${activePage == 'dashboard' ? 'selected' : ''}">
+        <span class="sidebar-link-content">
+            <ion-icon name="${activePage == 'dashboard' ? 'home' : 'home-outline'}"></ion-icon>
+            Trang Chủ
+        </span>
+    </a>
+</li>
+
+<li>
+    <a href="${pageContext.request.contextPath}/home" class="a-with-icon">
+        <span class="sidebar-link-content">
+            <ion-icon name="globe-outline"></ion-icon>
+            Xem Website
+        </span>
+    </a>
+</li>
+
+<c:if test="${canViewCategory || canViewProduct || canViewManufacturer}">
+<c:set var="isProductActive" value="${activePage == 'product' || activePage == 'category' || activePage == 'manufacturer'}" />
+<li class="sidebar-dropdown ${isProductActive ? 'expanded' : ''}">
+    <div class="a-with-icon dropdown-toggle ${isProductActive ? 'selected' : ''}">
+        <span class="sidebar-link-content">
+            <ion-icon name="cube-outline"></ion-icon>
+            Sản phẩm
+        </span>
+        <ion-icon name="${isProductActive ? 'chevron-down-outline' : 'chevron-back-outline'}" class="item-arrow-icon arrow-icon"></ion-icon>
+    </div>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="${pageContext.request.contextPath}/category-manager"
+               class="submenu-item ${activePage == 'category' ? 'selected' : ''}">
+               Danh mục
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/product-manager"
+               class="submenu-item ${activePage == 'product' ? 'selected' : ''}">
+               Sản phẩm
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/manage-manufacturer"
+               class="submenu-item ${activePage == 'manufacturer' ? 'selected' : ''}">
+               Thương hiệu
+            </a>
+        </li>
+    </ul>
+</li>
+</c:if>
+
+<c:if test="${canViewOrder || canViewReview}">
+<c:set var="isOrderActive" value="${activePage == 'order' || activePage == 'review'}" />
+<li class="sidebar-dropdown ${isOrderActive ? 'expanded' : ''}">
+    <div class="a-with-icon dropdown-toggle ${isOrderActive ? 'selected' : ''}">
+        <span class="sidebar-link-content">
+            <ion-icon name="cart-outline"></ion-icon>
+            Đơn hàng & Đánh giá
+        </span>
+        <ion-icon name="${isOrderActive ? 'chevron-down-outline' : 'chevron-back-outline'}" class="item-arrow-icon arrow-icon"></ion-icon>
+    </div>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="${pageContext.request.contextPath}/admin/manage-orders"
+               class="submenu-item ${activePage == 'order' ? 'selected' : ''}">
+               Đơn hàng
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/admin/manage-reviews"
+               class="submenu-item ${activePage == 'review' ? 'selected' : ''}">
+               Đánh giá
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/admin/order-stats"
+               class="submenu-item ${activePage == 'order-stats' ? 'selected' : ''}">
+               Thống kê
+            </a>
+        </li>
+    </ul>
+</li>
+</c:if>
+
+<c:if test="${canViewBanner || canViewBlog}">
+<c:set var="isMediaActive" value="${activePage == 'banner' || activePage == 'blog'}" />
+<li class="sidebar-dropdown ${isMediaActive ? 'expanded' : ''}">
+    <div class="a-with-icon dropdown-toggle ${isMediaActive ? 'selected' : ''}">
+        <span class="sidebar-link-content">
+            <ion-icon name="images-outline"></ion-icon>
+            Banner & Tin tức
+        </span>
+        <ion-icon name="${isMediaActive ? 'chevron-down-outline' : 'chevron-back-outline'}" class="item-arrow-icon arrow-icon"></ion-icon>
+    </div>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="${pageContext.request.contextPath}/banner-manager"
+               class="submenu-item ${activePage == 'banner' ? 'selected' : ''}">
+               Banner
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/admin/manage-blog"
+               class="submenu-item ${activePage == 'blog' ? 'selected' : ''}">
+               Tin tức
+            </a>
+        </li>
+    </ul>
+</li>
+</c:if>
+
+<c:if test="${canViewInventory}">
+<c:set var="isWarehouseActive" value="${activePage == 'receipt' || activePage == 'issue' || activePage == 'report'}" />
+<li class="sidebar-dropdown ${isWarehouseActive ? 'expanded' : ''}">
+    <div class="a-with-icon dropdown-toggle ${isWarehouseActive ? 'selected' : ''}">
+        <span class="sidebar-link-content">
+            <ion-icon name="people-outline"></ion-icon>
+            Quản lí kho hàng
+        </span>
+        <ion-icon name="${isWarehouseActive ? 'chevron-down-outline' : 'chevron-back-outline'}" class="item-arrow-icon arrow-icon"></ion-icon>
+    </div>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="${pageContext.request.contextPath}/product-receipt-manager"
+               class="submenu-item ${activePage == 'receipt' ? 'selected' : ''}">
+               Nhập kho
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/product-issue-manager"
+               class="submenu-item ${activePage == 'issue' ? 'selected' : ''}">
+               Xuất kho
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/report-manager"
+               class="submenu-item ${activePage == 'report' ? 'selected' : ''}">
+               Báo cáo & Thống kê
+            </a>
+        </li>
+    </ul>
+</li>
+</c:if>
+
+<c:if test="${canViewAccount || canViewStaff || canViewRole}">
+<c:set var="isUserManagementActive" value="${activePage == 'account' ||  activePage == 'staff' || activePage == 'role'}" />
+<li class="sidebar-dropdown ${isUserManagementActive ? 'expanded' : ''}">
+    <div class="a-with-icon dropdown-toggle ${isUserManagementActive ? 'selected' : ''}">
+        <span class="sidebar-link-content">
+            <ion-icon name="people-outline"></ion-icon>
+            Tài Khoản & Phân Quyền
+        </span>
+        <ion-icon name="${isUserManagementActive ? 'chevron-down-outline' : 'chevron-back-outline'}" class="item-arrow-icon arrow-icon"></ion-icon>
+    </div>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="${pageContext.request.contextPath}/account-manager"
+               class="submenu-item ${activePage == 'account' ? 'selected' : ''}">
+                Tài khoản
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/staffs-manager"
+               class="submenu-item ${activePage == 'staff' ? 'selected' : ''}">
+                Nhân sự
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/roles-manager"
+               class="submenu-item ${activePage == 'role' ? 'selected' : ''}">
+                Vai trò
+            </a>
+        </li>
+    </ul>
+</li>
+</c:if>
+
+<c:if test="${canViewPromotion}">
+<c:set var="isPromotionActive" value="${activePage == 'promotion' || activePage == 'promotion-stats'}" />
+<li class="sidebar-dropdown ${isPromotionActive ? 'expanded' : ''}">
+    <div class="a-with-icon dropdown-toggle ${isPromotionActive ? 'selected' : ''}">
+        <span class="sidebar-link-content">
+            <ion-icon name="ticket-outline"></ion-icon>
+            Khuyến mãi & Mã giảm giá
+        </span>
+        <ion-icon name="${isPromotionActive ? 'chevron-down-outline' : 'chevron-back-outline'}" class="item-arrow-icon arrow-icon"></ion-icon>
+    </div>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="${pageContext.request.contextPath}/admin/manage-promotions"
+               class="submenu-item ${activePage == 'promotion' ? 'selected' : ''}">
+                Danh sách
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/admin/promotion-stats"
+               class="submenu-item ${activePage == 'promotion-stats' ? 'selected' : ''}">
+                Thống kê
+            </a>
+        </li>
+    </ul>
+</li>
+</c:if>
+
+<c:if test="${canViewFiles}">
+<li>
+    <a href="${pageContext.request.contextPath}/admin/manage-files"
+       class="a-with-icon ${activePage == 'files' ? 'selected' : ''}">
+        <span class="sidebar-link-content">
+            <ion-icon name="${activePage == 'files' ? 'folder' : 'folder-outline'}"></ion-icon>
+            Quản Lí File & Hình Ảnh
+        </span>
+        <ion-icon name="chevron-back-outline" class="item-arrow-icon"></ion-icon>
+    </a>
+</li>
+</c:if>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const dropdownToggles = document.querySelectorAll('.sidebar-dropdown .dropdown-toggle');
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const parent = this.closest('.sidebar-dropdown');
+            parent.classList.toggle('expanded');
+
+            const arrow = this.querySelector('.arrow-icon');
+            if (arrow) {
+                if (parent.classList.contains('expanded')) {
+                    arrow.setAttribute('name', 'chevron-down-outline');
+                } else {
+                    arrow.setAttribute('name', 'chevron-back-outline');
+                }
+            }
+        });
+    });
+
+    const clearCacheBtn = document.getElementById('clear-cache-link');
+    if (clearCacheBtn) {
+        clearCacheBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Đã xóa cache hệ thống thành công!',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            } else {
+                const toast = document.createElement('div');
+                toast.style.position = 'fixed';
+                toast.style.top = '20px';
+                toast.style.right = '20px';
+                toast.style.backgroundColor = '#10b981';
+                toast.style.color = 'white';
+                toast.style.padding = '12px 24px';
+                toast.style.borderRadius = '6px';
+                toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                toast.style.zIndex = '99999';
+                toast.style.fontWeight = 'bold';
+                toast.style.display = 'flex';
+                toast.style.alignItems = 'center';
+                toast.style.gap = '8px';
+                toast.style.transition = 'all 0.3s ease';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                toast.innerHTML = '<ion-icon name="checkmark-circle-outline" style="font-size: 20px;"></ion-icon> Đã xóa cache thành công!';
+
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.opacity = '1';
+                    toast.style.transform = 'translateY(0)';
+                }, 50);
+
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 2000);
+            }
+        });
+    }
+});
+</script>
+<script src="${pageContext.request.contextPath}/admin/admin_security.js"></script>
+<script>
+    const USER_PERMISSIONS = [
+        <c:forEach items="${sessionScope.userPermissions}" var="perm" varStatus="loop">
+        "${perm}"${!loop.last ? ',' : ''}
+        </c:forEach>
+    ];
+</script>
+
+<!-- Admin Dark Mode Toggle -->
+<div class="admin-darkmode-toggle" id="adminDarkModeToggle" title="Bật/Tắt chế độ tối">
+    <ion-icon name="moon-outline"></ion-icon>
+    <span>Dark Mode</span>
+    <div class="admin-dm-switch"></div>
+</div>
+
+<script>
+(function() {
+    // Apply dark mode immediately (before DOMContentLoaded to prevent flash)
+    var isDark = localStorage.getItem('theme') === 'dark';
+    if (isDark) {
+        document.body.classList.add('dark-theme');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var toggleBtn = document.getElementById('adminDarkModeToggle');
+        if (!toggleBtn) return;
+
+        // Sync state on load
+        var currentTheme = localStorage.getItem('theme') === 'dark';
+        if (currentTheme) {
+            document.body.classList.add('dark-theme');
+        }
+
+        toggleBtn.addEventListener('click', function() {
+            var isDarkNow = document.body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+
+            // Update icon
+            var icon = toggleBtn.querySelector('ion-icon');
+            if (icon) {
+                icon.setAttribute('name', isDarkNow ? 'sunny-outline' : 'moon-outline');
+            }
+        });
+
+        // Set correct icon on load
+        if (currentTheme) {
+            var icon = toggleBtn.querySelector('ion-icon');
+            if (icon) {
+                icon.setAttribute('name', 'sunny-outline');
+            }
+        }
+    });
+})();
+</script>

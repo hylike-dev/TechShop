@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone 16 Pro Max 256GB - TechShop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/index_style.css}">
+    <link rel="stylesheet" th:href="@{/css/detail_style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .tech-spec-table th {
+            width: 35%;
+            background-color: #f8f9fa;
+        }
+        .product-gallery-main {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Fragment -->
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="bg-light py-3 border-bottom">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb m-0 small">
+                    <li class="breadcrumb-item"><a th:href="@{/}" class="text-decoration-none"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/store}" class="text-decoration-none">Điện thoại</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">iPhone 16 Pro Max 256GB</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <main class="py-4 bg-white">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Product Image Gallery -->
+                <div class="col-lg-6">
+                    <div class="product-gallery-main mb-3 shadow-sm">
+                        <i class="fas fa-mobile-alt fa-10x text-primary"></i>
+                    </div>
+                    <div class="d-flex gap-3 justify-content-center">
+                        <div class="border p-3 rounded bg-light cursor-pointer text-center" style="width: 80px;"><i class="fas fa-mobile-alt fa-2x text-primary"></i></div>
+                        <div class="border p-3 rounded bg-light cursor-pointer text-center" style="width: 80px;"><i class="fas fa-camera fa-2x text-secondary"></i></div>
+                        <div class="border p-3 rounded bg-light cursor-pointer text-center" style="width: 80px;"><i class="fas fa-microchip fa-2x text-dark"></i></div>
+                    </div>
+                </div>
+
+                <!-- Product Info & Spec Details -->
+                <div class="col-lg-6">
+                    <span class="badge bg-danger mb-2">Hàng VN/A Mới 100%</span>
+                    <h2 class="fw-bold text-dark mb-2">iPhone 16 Pro Max 256GB - Titan Đen</h2>
+                    
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="text-warning">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-dark ms-1 font-weight-bold">4.9/5</span>
+                        </div>
+                        <span class="text-muted">|</span>
+                        <span class="text-muted">(128 đánh giá từ người dùng)</span>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 mb-4 border">
+                        <div class="d-flex align-items-baseline gap-3">
+                            <span class="display-6 fw-bold text-danger">34.990.000 đ</span>
+                            <span class="fs-5 text-muted text-decoration-line-through">39.990.000 đ</span>
+                            <span class="badge bg-danger">Tiết kiệm 5.000.000 đ</span>
+                        </div>
+                        <small class="text-muted d-block mt-1"><i class="fas fa-check-circle text-success me-1"></i>Giá đã bao gồm VAT & Miễn phí vận chuyển toàn quốc</small>
+                    </div>
+
+                    <!-- Tech Specs Summary Cards -->
+                    <div class="row g-2 mb-4">
+                        <div class="col-4">
+                            <div class="border p-2 rounded text-center bg-light">
+                                <small class="text-muted d-block">Màn hình</small>
+                                <strong class="small text-dark">6.9" 120Hz</strong>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="border p-2 rounded text-center bg-light">
+                                <small class="text-muted d-block">Chipset</small>
+                                <strong class="small text-dark">Apple A18 Pro</strong>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="border p-2 rounded text-center bg-light">
+                                <small class="text-muted d-block">Dung lượng</small>
+                                <strong class="small text-dark">256 GB</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="d-flex gap-3 mb-4">
+                        <a th:href="@{/cart}" class="btn btn-primary btn-lg flex-fill fw-bold py-3">
+                            <i class="fas fa-cart-plus me-2"></i>Thêm Vào Giỏ Hàng
+                        </a>
+                        <a th:href="@{/payment}" class="btn btn-danger btn-lg flex-fill fw-bold py-3">
+                            <i class="fas fa-bolt me-2"></i>Mua Ngay Nhận Ngay
+                        </a>
+                    </div>
+
+                    <!-- Warranty & Support Box -->
+                    <div class="border rounded-3 p-3 bg-light">
+                        <h6 class="fw-bold mb-2"><i class="fas fa-shield-alt text-primary me-2"></i>Cam Kết Bảo Hành Tại TechShop:</h6>
+                        <ul class="list-unstyled mb-0 small text-muted">
+                            <li class="mb-1"><i class="fas fa-check text-success me-2"></i>Bảo hành chính hãng 12 tháng tại các trung tâm ủy quyền Apple Việt Nam.</li>
+                            <li class="mb-1"><i class="fas fa-check text-success me-2"></i>1 đổi 1 trong 30 ngày đầu nếu phát sinh lỗi từ nhà sản xuất.</li>
+                            <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Tặng gói dán màn hình cao cấp & Giảm 20% khi mua kèm phụ kiện Anker.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Specs & Detail Reviews Tabs -->
+            <div class="row mt-5">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm p-4 rounded-4 mb-4">
+                        <h4 class="fw-bold mb-3 border-bottom pb-2"><i class="fas fa-info-circle text-primary me-2"></i>Thông Số Kỹ Thuật Chi Tiết</h4>
+                        <table class="table table-bordered tech-spec-table">
+                            <tbody>
+                                <tr><th>Kích thước màn hình</th><td>6.9 inches, Super Retina XDR OLED 120Hz ProMotion</td></tr>
+                                <tr><th>Độ phân giải</th><td>2868 x 1320 pixels (460 ppi)</td></tr>
+                                <tr><th>Chip xử lý (CPU)</th><td>Apple A18 Pro 6 nhân (2 nhân hiệu năng cao + 4 nhân tiết kiệm điện)</td></tr>
+                                <tr><th>GPU</th><td>Apple GPU 6 nhân</td></tr>
+                                <tr><th>Bộ nhớ RAM</th><td>8 GB</td></tr>
+                                <tr><th>Bộ nhớ trong (ROM)</th><td>256 GB NVMe</td></tr>
+                                <tr><th>Camera sau</th><td>Camera chính 48MP + Góc siêu rộng 48MP + Telephoto 12MP Zoom 5x</td></tr>
+                                <tr><th>Camera trước</th><td>12MP TrueDepth với AutoFocus</td></tr>
+                                <tr><th>Pin & Sạc</th><td>4,685 mAh, Sạc nhanh MagSafe 25W, Sạc dây 30W</td></tr>
+                                <tr><th>Hệ điều hành</th><td>iOS 18 chính thức</td></tr>
+                                <tr><th>Trọng lượng</th><td>227 gram</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Customer Reviews Section -->
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm p-4 rounded-4">
+                        <h5 class="fw-bold mb-3 border-bottom pb-2"><i class="fas fa-comments text-primary me-2"></i>Đánh Giá Người Dùng</h5>
+                        <div class="mb-3">
+                            <div class="border-bottom pb-2 mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <strong class="small text-dark">Trần Minh Hoàng</strong>
+                                    <span class="text-warning small"><i class="fas fa-star"></i> 5/5</span>
+                                </div>
+                                <p class="small text-muted mb-0">Máy đẹp xuất sắc, titan đen cầm rất đầm tay. Giao hàng tại HN chỉ mất 1 tiếng rưỡi!</p>
+                            </div>
+                            <div class="border-bottom pb-2 mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <strong class="small text-dark">Lê Thị Mai</strong>
+                                    <span class="text-warning small"><i class="fas fa-star"></i> 5/5</span>
+                                </div>
+                                <p class="small text-muted mb-0">Camera quay video 4K 120fps siêu nét. Bảo hành chính hãng VN/A yên tâm tuyệt đối.</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline-primary w-100 fw-bold btn-sm">Viết Đánh Giá Mới</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Fragment -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

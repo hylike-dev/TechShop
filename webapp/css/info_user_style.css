@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #8c3333;
+    --secondary-color: #c7a17a;
+    --error-color: #dc3545;
+    --success-color: #28a745;
+    --bg-light: #f9f9f9;
+    --text-dark: #333;
+    --transition-speed: 0.25s;
+}
+
+.user-profile-card {
+    font-family: 'Inter', 'Roboto', sans-serif;
+    background: #fff;
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.user-profile-card h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: var(--primary-color);
+    font-weight: 700;
+    border-bottom: 2px solid #f5f5f5;
+    padding-bottom: 15px;
+}
+
+.user-info-fields {
+    width: 100%;
+}
+
+.field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: var(--bg-light);
+    border: 1px solid #eee;
+    transition: all var(--transition-speed) ease;
+}
+
+.field i.left-icon {
+    color: var(--secondary-color);
+    width: 20px;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.field:focus-within {
+    background-color: #fff;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(199, 161, 122, 0.1);
+}
+
+.editable-input {
+    flex: 1;
+    padding: 12px 15px 12px 0;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text-dark);
+    outline: none;
+}
+
+.editable-input:disabled {
+    color: #666;
+    cursor: not-allowed;
+}
+
+.btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+}
+
+#editBtn {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+#editBtn:hover {
+    background-color: #a13d3d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(140, 51, 51, 0.2);
+}
+
+#saveBtn {
+    background-color: var(--success-color);
+    color: #fff;
+}
+
+#saveBtn:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+.btn.cancel {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border-color: #ddd;
+}
+
+.btn.cancel:hover {
+    background-color: #e2e6ea;
+    color: #343a40;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+@media (max-width: 600px) {
+    .user-profile-card {
+        padding: 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

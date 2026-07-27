@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="left-sidebar" th:fragment="user_sidebar(activePage)">
+    <div class="user-profile-summary mb-4 text-center p-3 bg-white rounded shadow-sm">
+        <div class="avatar-circle mx-auto mb-2 bg-primary text-white d-flex align-items-center justify-content-center rounded-circle" style="width: 60px; height: 60px; font-size: 24px;">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <h6 class="fw-bold mb-0">Nguyễn Văn Tech</h6>
+        <small class="text-muted">techuser@gmail.com</small>
+    </div>
+
+    <ul class="nav-menu list-unstyled">
+        <li th:classappend="${activePage == 'profile' ? 'active' : ''}">
+            <a th:href="@{/user/profile}"><i class="fa-solid fa-user me-2"></i> <span>Thông tin tài khoản</span></a>
+        </li>
+        <li th:classappend="${activePage == 'addresses' ? 'active' : ''}">
+            <a th:href="@{/user/addresses}"><i class="fa-solid fa-location-dot me-2"></i> <span>Sổ địa chỉ</span></a>
+        </li>
+        <li th:classappend="${activePage == 'orders' ? 'active' : ''}">
+            <a th:href="@{/user/orders}"><i class="fa-solid fa-box me-2"></i> <span>Đơn hàng của tôi</span></a>
+        </li>
+        <li th:classappend="${activePage == 'reviews' ? 'active' : ''}">
+            <a th:href="@{/user/reviews}"><i class="fa-solid fa-star me-2"></i> <span>Lịch sử đánh giá</span></a>
+        </li>
+        <li th:classappend="${activePage == 'favorites' ? 'active' : ''}">
+            <a th:href="@{/user/favorites}">
+                <i class="fa-solid fa-heart me-2 text-danger"></i> <span>Sản phẩm yêu thích</span>
+                <span class="badge bg-danger ms-auto">3</span>
+            </a>
+        </li>
+        <hr>
+        <li>
+            <a th:href="@{/logout}" class="text-danger">
+                <i class="fa-solid fa-right-from-bracket me-2"></i> <span>Đăng xuất</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Sản Phẩm Công Nghệ - TechShop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/index_style.css}">
+    <link rel="stylesheet" th:href="@{/css/store_style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <!-- Header Fragment -->
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="bg-light py-3 border-bottom">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb m-0 small">
+                    <li class="breadcrumb-item"><a th:href="@{/}" class="text-decoration-none"><i class="fas fa-home"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Sản phẩm công nghệ</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <main class="py-4 bg-light">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Sidebar Filter Column -->
+                <div class="col-lg-3">
+                    <div class="card border-0 shadow-sm rounded-3 p-3">
+                        <h5 class="fw-bold mb-3 border-bottom pb-2"><i class="fas fa-filter text-primary me-2"></i>Bộ Lọc Tiêu Chí</h5>
+                        
+                        <!-- Category Filter -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-2">Danh Mục Thiết Bị</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="cat-phone" checked>
+                                <label class="form-check-label d-flex justify-content-between" for="cat-phone">
+                                    <span><i class="fas fa-mobile-alt me-2 text-primary"></i>Điện thoại</span>
+                                    <span class="badge bg-light text-dark border">48</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="cat-laptop" checked>
+                                <label class="form-check-label d-flex justify-content-between" for="cat-laptop">
+                                    <span><i class="fas fa-laptop me-2 text-dark"></i>Laptop & Mac</span>
+                                    <span class="badge bg-light text-dark border">32</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="cat-audio">
+                                <label class="form-check-label d-flex justify-content-between" for="cat-audio">
+                                    <span><i class="fas fa-headphones me-2 text-success"></i>Tai nghe & Loa</span>
+                                    <span class="badge bg-light text-dark border">24</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="cat-smartwatch">
+                                <label class="form-check-label d-flex justify-content-between" for="cat-smartwatch">
+                                    <span><i class="fas fa-clock me-2 text-warning"></i>Smartwatch</span>
+                                    <span class="badge bg-light text-dark border">16</span>
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="cat-acc">
+                                <label class="form-check-label d-flex justify-content-between" for="cat-acc">
+                                    <span><i class="fas fa-keyboard me-2 text-info"></i>Phụ kiện PC</span>
+                                    <span class="badge bg-light text-dark border">50+</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Brand Filter -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-2">Hãng Sản Xuất</h6>
+                            <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b-apple" checked><label class="form-check-label" for="b-apple">Apple</label></div>
+                            <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b-samsung" checked><label class="form-check-label" for="b-samsung">Samsung</label></div>
+                            <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b-asus"><label class="form-check-label" for="b-asus">ASUS ROG</label></div>
+                            <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b-sony"><label class="form-check-label" for="b-sony">Sony</label></div>
+                            <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b-dell"><label class="form-check-label" for="b-dell">Dell</label></div>
+                            <div class="form-check mb-1"><input class="form-check-input" type="checkbox" id="b-logitech"><label class="form-check-label" for="b-logitech">Logitech</label></div>
+                        </div>
+
+                        <!-- Price Range Filter -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-2">Khoảng Giá</h6>
+                            <div class="form-check mb-1"><input class="form-check-input" type="radio" name="price" id="p1"><label class="form-check-label" for="p1">Dưới 5 triệu</label></div>
+                            <div class="form-check mb-1"><input class="form-check-input" type="radio" name="price" id="p2"><label class="form-check-label" for="p2">Từ 5 - 15 triệu</label></div>
+                            <div class="form-check mb-1"><input class="form-check-input" type="radio" name="price" id="p3" checked><label class="form-check-label" for="p3">Từ 15 - 30 triệu</label></div>
+                            <div class="form-check mb-1"><input class="form-check-input" type="radio" name="price" id="p4"><label class="form-check-label" for="p4">Trên 30 triệu</label></div>
+                        </div>
+
+                        <button class="btn btn-primary w-100 fw-bold"><i class="fas fa-search me-1"></i> Lọc Sản Phẩm</button>
+                    </div>
+                </div>
+
+                <!-- Product Catalog List -->
+                <div class="col-lg-9">
+                    <!-- Top Bar Sort -->
+                    <div class="card border-0 shadow-sm p-3 mb-4 rounded-3 d-flex flex-row flex-wrap justify-content-between align-items-center">
+                        <div class="fw-bold text-dark mb-2 mb-md-0">
+                            Hiển thị <span class="text-primary">8</span> sản phẩm công nghệ nổi bật
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <label class="small text-muted text-nowrap">Sắp xếp theo:</label>
+                            <select class="form-select form-select-sm">
+                                <option selected>Nổi bật nhất</option>
+                                <option>Giá: Thấp đến Cao</option>
+                                <option>Giá: Cao đến Thấp</option>
+                                <option>Bán chạy nhất</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="row g-4">
+                        <!-- Product 1 -->
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="card h-100 border-0 shadow-sm product-card">
+                                <div class="p-4 text-center bg-light rounded-top">
+                                    <i class="fas fa-mobile-alt fa-5x text-primary"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <span class="text-uppercase text-muted small fw-bold">Apple</span>
+                                    <h6 class="card-title fw-bold text-dark">iPhone 16 Pro Max 256GB</h6>
+                                    <p class="text-muted small">Titan Đen, Chip A18 Pro, Camera 48MP</p>
+                                    <div class="mt-auto">
+                                        <div class="fw-bold text-danger fs-5 mb-2">34.990.000 đ</div>
+                                        <a th:href="@{/detail(id=1)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-eye me-1"></i>Xem Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 2 -->
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="card h-100 border-0 shadow-sm product-card">
+                                <div class="p-4 text-center bg-light rounded-top">
+                                    <i class="fas fa-laptop fa-5x text-dark"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <span class="text-uppercase text-muted small fw-bold">Apple</span>
+                                    <h6 class="card-title fw-bold text-dark">MacBook Pro 16" M3 Max</h6>
+                                    <p class="text-muted small">RAM 36GB, SSD 1TB, Màn Liquid Retina</p>
+                                    <div class="mt-auto">
+                                        <div class="fw-bold text-danger fs-5 mb-2">59.990.000 đ</div>
+                                        <a th:href="@{/detail(id=2)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-eye me-1"></i>Xem Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 3 -->
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="card h-100 border-0 shadow-sm product-card">
+                                <div class="p-4 text-center bg-light rounded-top">
+                                    <i class="fas fa-headphones fa-5x text-success"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <span class="text-uppercase text-muted small fw-bold">Sony</span>
+                                    <h6 class="card-title fw-bold text-dark">Sony WH-1000XM5</h6>
+                                    <p class="text-muted small">Tai nghe chống ồn chủ động ANC cao cấp</p>
+                                    <div class="mt-auto">
+                                        <div class="fw-bold text-danger fs-5 mb-2">7.990.000 đ</div>
+                                        <a th:href="@{/detail(id=3)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-eye me-1"></i>Xem Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 4 -->
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="card h-100 border-0 shadow-sm product-card">
+                                <div class="p-4 text-center bg-light rounded-top">
+                                    <i class="fas fa-clock fa-5x text-warning"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <span class="text-uppercase text-muted small fw-bold">Apple</span>
+                                    <h6 class="card-title fw-bold text-dark">Apple Watch Ultra 2</h6>
+                                    <p class="text-muted small">Vỏ Titan 49mm, GPS Băng Tần Kép</p>
+                                    <div class="mt-auto">
+                                        <div class="fw-bold text-danger fs-5 mb-2">19.990.000 đ</div>
+                                        <a th:href="@{/detail(id=4)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-eye me-1"></i>Xem Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 5 -->
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="card h-100 border-0 shadow-sm product-card">
+                                <div class="p-4 text-center bg-light rounded-top">
+                                    <i class="fas fa-tablet-alt fa-5x text-info"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <span class="text-uppercase text-muted small fw-bold">Apple</span>
+                                    <h6 class="card-title fw-bold text-dark">iPad Air 11" M2 Wi-Fi</h6>
+                                    <p class="text-muted small">Chip M2 128GB, Màn Liquid Retina</p>
+                                    <div class="mt-auto">
+                                        <div class="fw-bold text-danger fs-5 mb-2">16.490.000 đ</div>
+                                        <a th:href="@{/detail(id=5)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-eye me-1"></i>Xem Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 6 -->
+                        <div class="col-12 col-sm-6 col-md-4">
+                            <div class="card h-100 border-0 shadow-sm product-card">
+                                <div class="p-4 text-center bg-light rounded-top">
+                                    <i class="fas fa-gamepad fa-5x text-danger"></i>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <span class="text-uppercase text-muted small fw-bold">ASUS</span>
+                                    <h6 class="card-title fw-bold text-dark">ASUS ROG Strix SCAR 18</h6>
+                                    <p class="text-muted small">i9-14900HX, RTX 4080, RAM 32GB</p>
+                                    <div class="mt-auto">
+                                        <div class="fw-bold text-danger fs-5 mb-2">78.990.000 đ</div>
+                                        <a th:href="@{/detail(id=6)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-eye me-1"></i>Xem Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav class="mt-5">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Fragment -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

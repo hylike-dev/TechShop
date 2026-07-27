@@ -1,0 +1,478 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Admin
+  Date: 3/17/2026
+  Time: 7:32 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <title>Quản Lí Tài Khoản Khách</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/admin_css/manage_product_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/admin_css/manage_accounts.css">
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+</head>
+<body>
+<div class="dashboard-container">
+    <nav class="dashboard-sidebar">
+        <ul class="sidebar-items">
+            <div class="group-avatar">
+                <%@ include file="/admin/components/avatar.jsp" %>
+                <%@ include file="/admin/components/notify_icon.jsp" %>
+            </div>
+            <c:set var="activePage" value="account" scope="request" />
+            <%@ include file="/admin/components/sidebar_items_component.jsp" %>
+        </ul>
+    </nav>
+    <div class="dashboard-content">
+        <main class="dashboard-main-content">
+            <div class="main-header">
+                <div>
+                    <h1>Quản lí tài khoản</h1>
+                    <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Với các tài khoản được đánh dấu đỏ nghĩa là đã khoá tài khoản</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-danger" id="deleteAll-modal-btn" data-require-perm="account:delete" style="display: flex; align-items: center; gap: 8px;">
+                        <ion-icon name="trash-outline"></ion-icon>
+                        Khoá (Đã Chọn)
+                    </button>
+                    <button class="btn btn-success" id="unlock-modal-btn" data-require-perm="account:upsert" style="display: flex; align-items: center; gap: 8px;">
+                        <ion-icon name="checkmark-outline"></ion-icon>
+                        Mở (Đã Chọn)
+                    </button>
+                    <button class="btn btn-primary" id="open-modal-btn" data-require-perm="account:upsert" style="display: flex; align-items: center; gap: 8px;">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        Thêm
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-scroll-wrapper">
+                    <table id="account-table-main" class="product-table">
+                    <thead>
+                    <tr class="sample">
+                        <th class="col-tick">Chọn</th>
+                        <th class="col-id">ID Tài Khoản</th>
+                        <th class="col-email">Email</th>
+                        <th class="col-phone">Số Liên Lạc</th>
+                        <th class="col-fullname">Họ và Tên</th>
+                        <th class="col-create">Ngày tạo</th>
+                        <th class="col-action">Hành Động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="user" items="${listAccount}">
+                        <tr class="accounts ${user.active != 1 ? 'locked' : ''}">
+                            <td class="cell-tick"><input type="checkbox" class="row-checkbox" value="${user.id}"/></td>
+                            <td class="cell-id">${user.id}</td>
+                            <td class="cell-email">${user.email}</td>
+                            <td class="cell-phone">${user.phoneNumber}</td>
+                            <td class="cell-fullname">${user.fullName}</td>
+                            <td class="cell-create">${user.createdAt}</td>
+                            <td class="cell-action">
+                                <a href="${pageContext.request.contextPath}/account-manager/detail?id=${user.id}" class="btn btn-secondary detail">Chi tiết</a>
+                                <button class="btn btn-secondary edit-btn-trigger" data-require-perm="account:upsert" data-target="modal-edit-${user.id}">Sửa</button>
+                                <c:choose>
+                                    <c:when test="${user.active == 1}">
+                                        <%-- Đang hoạt động --%>
+                                        <button class="btn btn-danger lock" data-require-perm="account:delete" onclick="toggleUserStatus(${user.id}, 'block')">Khoá</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <%-- Đang bị khoá --%>
+                                        <button class="btn btn-success unlock" data-require-perm="account:upsert" onclick="toggleUserStatus(${user.id}, 'unlock')">Mở</button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+
+                        <div class="modal-overlay-edit_information" id="modal-edit-${user.id}">
+                            <div class="modal-content-edit_information">
+                                <h2>Bảng thông tin</h2>
+                                <form action="${pageContext.request.contextPath}/account-manager/edit" method="POST">
+                                    <div class="edit-information-account">
+                                        <div class="userId-section">
+                                            <label for="id">ID:</label>
+                                            <input type="text" id="id" name="id" value="${user.id}" placeholder="ID hiện không có" readonly>
+                                        </div>
+                                        <div class="email-section">
+                                            <label for="email">Email</label>
+                                            <input type="text" id="email" name="email" value="${user.email}" placeholder="Chưa có Email"
+                                                   required>
+                                        </div>
+                                        <div class="newPassword-section">
+                                            <label for="newPass">Mật khẩu mới (nếu có)</label>
+                                            <input type="text" id="password_" name="password_" placeholder="Nhập mật khẩu mới nếu muốn thay đổi">
+                                        </div>
+                                        <div class="fullname-section">
+                                            <label for="fullname">Tên Đầy Đủ</label>
+                                            <input type="text" id="fullname" name="fullname" value="${user.fullName}" placeholder="Chưa có tên"
+                                                   required>
+                                        </div>
+                                        <div class="birth-section">
+                                            <label for="birth">Thời Gian Sinh</label>
+                                            <input type="date" name="birth" value="<fmt:formatDate value='${user.birthDay}' pattern='yyyy-MM-dd' />" required>
+                                        </div>
+                                        <div class="username-section">
+                                            <label for="username_">Tên Đăng Nhập</label>
+                                            <input type="text" id="username_" name="username_" value="${user.username}" placeholder="Chưa có tên đăng nhập">
+                                        </div>
+                                        <div class="phone-section">
+                                            <label for="phone-number">Số Điện Thoại</label>
+                                            <input type="tel" id="phone-number" name="phone-number" value="${user.phoneNumber}"
+                                                   placeholder="Chưa có số điện thoại" required>
+                                        </div>
+                                        <div class="active-section">
+                                            <label for="activeSelect">Đang hoạt động:</label>
+                                            <select id="activeSelect" name="activeSelect" required>
+                                                <option value="1" ${user.active == 1 ? 'selected' : ''}>Có</option>
+                                                <option value="0" ${user.active == 0 ? 'selected' : ''}>Không</option>
+                                            </select>
+                                        </div>
+                                        <div class="create_account-section">
+                                            <label for="create-account">Ngày tạo</label>
+                                            <input type="date" value="<fmt:formatDate value='${user.createdAt}' pattern="yyyy-MM-dd" />" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="error-message">
+                                        <c:if test="${editingId == user.id and not empty errorList}">
+                                            <ul class="error-list-summary">
+                                                <c:forEach var="msg" items="${errorList}">
+                                                    <li><ion-icon name="alert-circle-outline"></ion-icon> ${msg}</li>
+                                                </c:forEach>
+                                            </ul>
+                                        </c:if>
+                                    </div>
+                                    <div class="group-button-action section">
+                                        <button type="button" class="cancel element-button close-edit-modal" id="close-modal-btn7">Huỷ</button>
+                                        <button type="submit" class="fix-btn element-button">Sửa</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </c:forEach>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div class="modal-overlay" id="add-account-modal">
+    <div class="modal-content">
+        <form id="add-form" action="${pageContext.request.contextPath}/account-manager/add" method="POST">
+            <div class="username-input">
+                <label for="username" class="label-with-icon">
+                    <ion-icon name="person-outline"></ion-icon>
+                    Tài Khoản</label>
+                <input type="text" id="username" name="email" placeholder="Nhập Email"
+                       value="${param.email}"
+                       class="${not empty emailError ? 'input-error' : ''}" required>
+                <span class="error-msg">${emailError}</span>
+                <span class="error-msg">${emailError2}</span>
+            </div>
+            <div class="password-input">
+                <label for="password" class="label-with-icon">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    Mật Khẩu</label>
+                <input type="text" id="password" name="password" placeholder="Nhập mật khẩu"
+                       class="${not empty passwordError ? 'input-error' : ''}" required>
+                <span class="error-msg">${passwordError}</span>
+            </div>
+            <div class="group-button-action section">
+                <button type="button" class="cancel element-button" id="close-modal-btn">Huỷ</button>
+                <button type="submit" class="add-btn element-button">Thêm</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-overlay-excel" id="excel-account-modal">
+    <div class="modal-content-excel">
+        <p>Thành công xuất ra file Excel</p>
+        <button class="modal-close2" id="close-modal-btn5">
+            <ion-icon name="close-outline"></ion-icon>
+        </button>
+    </div>
+</div>
+<c:if test="${errorSource == 'edit_account' and not empty editingId}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById('modal-edit-${editingId}');
+            if (modal) modal.classList.add('show');
+        });
+    </script>
+</c:if>
+<c:if test="${errorSource == 'add_account'}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const modal = document.getElementById('add-account-modal');
+            if (modal) modal.classList.add('show');
+        });
+    </script>
+</c:if>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css"/>
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+<script src="${pageContext.request.contextPath}/popup.js"></script>
+<script src="${pageContext.request.contextPath}/preventspace.js"></script>
+<style>
+    .error-msg {
+        color: red;
+        font-size: 0.85em;
+        font-style: italic;
+        margin-top: -5px;
+        display: block;
+    }
+    input.input-error {
+        border: 1px solid red;
+    }
+
+    .error-message {
+        margin-top: 15px;
+        width: 100%;
+    }
+    .error-list-summary {
+        background-color: #fff2f2;
+        border-left: 4px solid #d8000c;
+        padding: 10px 15px;
+        margin: 0;
+        list-style: none;
+        border-radius: 4px;
+    }
+    .error-list-summary li {
+        color: #d8000c;
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+    }
+    .error-list-summary li:last-child {
+        margin-bottom: 0;
+    }
+</style>
+<script>
+    // Run Pop-up function
+    document.addEventListener("DOMContentLoaded", function () {
+        setupModal('add-account-modal', 'open-modal-btn', 'close-modal-btn');
+        setupModal('excel-account-modal', 'excel-modal-btn', 'close-modal-btn5');
+        setupModal('avatar-account-modal', 'avatar-modal-btn', 'close-modal-btn9');
+        setupModal('notification-account-modal', 'notification-modal-btn', 'close-modal-btn8');
+        setupDynamicModals('edit-btn-trigger', 'close-edit-modal');
+
+        $(document).ready(function () {
+            $('#account-table-main').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.3.5/i18n/vi.json',
+                },
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Hàm dùng chung để lấy ID và gửi AJAX
+        // status: true (Khoá), false (Mở khoá)
+        // modalId: ID của modal đang mở để đóng lại nếu người dùng chưa chọn gì
+        function handleBulkAction(e, status, modalId) {
+            e.preventDefault();
+
+            var ids = [];
+            var table = $('#account-table-main').DataTable();
+
+            // Lấy tất cả các checkbox đã tick
+            table.$('input.row-checkbox:checked').each(function () {
+                ids.push($(this).val());
+            });
+
+            if (ids.length === 0) {
+                alert("Vui lòng chọn ít nhất một tài khoản!");
+                // Đóng modal tương ứng
+                if(document.getElementById(modalId)) {
+                    document.getElementById(modalId).classList.remove('show');
+                }
+                return;
+            }
+
+            // Gửi danh sách ID và status về Server
+            $.ajax({
+                url: '${pageContext.request.contextPath}/account-manager/lock-multiple',
+                type: 'POST',
+                data: {
+                    ids: ids.join(','),
+                    status: status
+                },
+                success: function (response) {
+                    var actionText = status ? "Khoá" : "Mở khoá";
+                    alert("Đã " + actionText + " các tài khoản đã chọn thành công!");
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert("Có lỗi xảy ra khi xử lý.");
+                }
+            });
+        }
+
+        // Xử lý nút khoá tất cả (status = true)
+        $('.deleteAll-button').click(function (e) {
+            handleBulkAction(e, true, 'deleteAll-account-modal');
+        });
+
+        // Xử lý nút mở khoá tất cả (status = false)
+        $('.unlockAll-button').click(function (e) {
+            handleBulkAction(e, false, 'unlock-account-btn');
+        });
+    });
+</script>
+<script>
+    const listFields = ['#username, #password, #email, #password_, #birth, #username_, #phone-number'];
+    preventspace(listFields)
+
+    function toggleUserStatus(userId, currentAction) {
+        let isBlock = (currentAction === 'block');
+        let actionText = isBlock ? "KHOÁ" : "MỞ KHOÁ";
+        let message = `Bạn có chắc chắn muốn ` + actionText + ` tài khoản này không?`;
+        let iconType = isBlock ? 'warning' : 'question';
+        let confirmBtnColor = isBlock ? '#d33' : '#28a745';
+
+        Swal.fire({
+            title: 'Xác nhận hành động',
+            text: message,
+            icon: iconType,
+            showCancelButton: true,
+            confirmButtonColor: confirmBtnColor,
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Thực hiện',
+            cancelButtonText: 'Huỷ bỏ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Đang xử lý...',
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading(); }
+                });
+
+                // Gọi xuống Servlet
+                fetch('${pageContext.request.contextPath}/account-manager/toggle-status', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + userId
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Thông báo thành công và tự động reload
+                            Swal.fire({
+                                title: 'Thành công!',
+                                text: `Đã ` + actionText.toLowerCase() + ` tài khoản.`,
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Thất bại!', 'Có lỗi xảy ra, vui lòng thử lại!', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire('Lỗi kết nối!', 'Không thể kết nối tới server.', 'error');
+                    });
+            }
+        });
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        function handleBulkActionWithSweetAlert(status) {
+            var ids = [];
+            var table = $('#account-table-main').DataTable();
+
+            // Lấy tất cả các checkbox đã tick từ DataTable
+            table.$('input.row-checkbox:checked').each(function () {
+                ids.push($(this).val());
+            });
+
+            if (ids.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Chưa chọn tài khoản',
+                    text: 'Vui lòng chọn ít nhất một tài khoản để thực hiện thao tác!'
+                });
+                return;
+            }
+
+            var actionText = status ? "KHOÁ" : "MỞ KHOÁ";
+            var confirmBtnColor = status ? '#d33' : '#28a745';
+
+            // Hiện Popup xác nhận
+            Swal.fire({
+                title: 'Xác nhận ' + actionText + ' hàng loạt',
+                text: 'Bạn có chắc chắn muốn ' + actionText + ' ' + ids.length + ' tài khoản đã chọn?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: confirmBtnColor,
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Đồng ý ' + actionText,
+                cancelButtonText: 'Huỷ bỏ'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Đang xử lý...',
+                        allowOutsideClick: false,
+                        didOpen: () => { Swal.showLoading(); }
+                    });
+
+                    // Gửi danh sách ID và status về Server qua AJAX
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/account-manager/lock-multiple',
+                        type: 'POST',
+                        data: {
+                            ids: ids.join(','),
+                            status: status
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                title: 'Thành công!',
+                                text: 'Đã ' + actionText.toLowerCase() + ' ' + ids.length + ' tài khoản thành công!',
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload();
+                            });
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.error(thrownError);
+                            Swal.fire('Thất bại!', 'Có lỗi xảy ra khi xử lý.', 'error');
+                        }
+                    });
+                }
+            });
+        }
+
+        $('#deleteAll-modal-btn').click(function (e) {
+            e.preventDefault();
+            handleBulkActionWithSweetAlert(true); // true = Khoá
+        });
+
+        $('#unlock-modal-btn').click(function (e) {
+            e.preventDefault();
+            handleBulkActionWithSweetAlert(false); // false = Mở khoá
+        });
+    });
+</script>
+</body>
+</html>

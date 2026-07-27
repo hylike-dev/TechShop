@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechShop - Thế Giới Công Nghệ Chính Hãng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/index_style.css}">
+    <link rel="stylesheet" th:href="@{/css/store_style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .tech-banner-item {
+            background-size: cover;
+            background-position: center;
+            height: 420px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .tech-brand-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            background: #fff;
+            text-align: center;
+        }
+        .tech-brand-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: #0d6efd;
+        }
+        .flash-sale-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #dc3545;
+            color: #fff;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+        .badge-tech-spec {
+            background: #e7f1ff;
+            color: #0d6efd;
+            font-size: 11px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Fragment -->
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main class="py-4 bg-light">
+        <div class="container">
+            <!-- Hero Carousel -->
+            <section class="hero-section mb-4">
+                <div id="heroCarousel" class="carousel slide carousel-fade shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel" data-bs-interval="4000">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="p-5 text-white d-flex align-items-center" style="background: linear-gradient(135deg, #0d6efd, #002b66); min-height: 380px;">
+                                <div class="col-md-7">
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3">SUPER TECH WEEK 2026</span>
+                                    <h1 class="display-5 fw-extrabold mb-3">iPhone 16 Pro Max</h1>
+                                    <p class="fs-5 mb-4 text-light">Titan Đen Siêu Bền | Chip A18 Pro Siêu Nhanh | Camera 48MP zoom 5x</p>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <a th:href="@{/detail(id=1)}" class="btn btn-warning btn-lg fw-bold px-4">Mua Ngay - Trả Góp 0%</a>
+                                        <span class="fs-4 text-warning fw-bold">34.990.000 đ</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 text-center d-none d-md-block">
+                                    <i class="fas fa-mobile-alt fa-10x text-white-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="p-5 text-white d-flex align-items-center" style="background: linear-gradient(135deg, #6610f2, #1f0550); min-height: 380px;">
+                                <div class="col-md-7">
+                                    <span class="badge bg-danger px-3 py-2 rounded-pill fw-bold mb-3">GAMING LAPTOP MONSTER</span>
+                                    <h1 class="display-5 fw-extrabold mb-3">MacBook Pro M3 Max</h1>
+                                    <p class="fs-5 mb-4 text-light">Màn hình Liquid Retina XDR 120Hz | RAM 36GB | SSD 1TB</p>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <a th:href="@{/store}" class="btn btn-light btn-lg fw-bold px-4 text-primary">Xem Chi Tiết</a>
+                                        <span class="fs-4 text-warning fw-bold">59.990.000 đ</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 text-center d-none d-md-block">
+                                    <i class="fas fa-laptop fa-10x text-white-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="p-5 text-white d-flex align-items-center" style="background: linear-gradient(135deg, #198754, #083b22); min-height: 380px;">
+                                <div class="col-md-7">
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3">SOUND OF FREEDOM</span>
+                                    <h1 class="display-5 fw-extrabold mb-3">Sony WH-1000XM5</h1>
+                                    <p class="fs-5 mb-4 text-light">Chống ồn chủ động đỉnh cao ANC | Pin 30H | Âm thanh Hi-Res Audio</p>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <a th:href="@{/store}" class="btn btn-warning btn-lg fw-bold px-4">Đặt Hàng Ngay</a>
+                                        <span class="fs-4 text-warning fw-bold">7.990.000 đ</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 text-center d-none d-md-block">
+                                    <i class="fas fa-headphones-alt fa-10x text-white-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Brand Selector Bar -->
+            <section class="mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold m-0"><i class="fas fa-award text-primary me-2"></i>Thương Hiệu Nổi Bật</h4>
+                </div>
+                <div class="row g-3">
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <a th:href="@{/store(brand='apple')}" class="text-decoration-none">
+                            <div class="tech-brand-card">
+                                <i class="fab fa-apple fa-2x mb-2 text-dark"></i>
+                                <h6 class="fw-bold text-dark m-0">Apple</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <a th:href="@{/store(brand='samsung')}" class="text-decoration-none">
+                            <div class="tech-brand-card">
+                                <i class="fas fa-mobile-alt fa-2x mb-2 text-primary"></i>
+                                <h6 class="fw-bold text-dark m-0">Samsung</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <a th:href="@{/store(brand='asus')}" class="text-decoration-none">
+                            <div class="tech-brand-card">
+                                <i class="fas fa-laptop-code fa-2x mb-2 text-danger"></i>
+                                <h6 class="fw-bold text-dark m-0">ASUS ROG</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <a th:href="@{/store(brand='sony')}" class="text-decoration-none">
+                            <div class="tech-brand-card">
+                                <i class="fas fa-headphones fa-2x mb-2 text-success"></i>
+                                <h6 class="fw-bold text-dark m-0">Sony</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <a th:href="@{/store(brand='dell')}" class="text-decoration-none">
+                            <div class="tech-brand-card">
+                                <i class="fas fa-desktop fa-2x mb-2 text-info"></i>
+                                <h6 class="fw-bold text-dark m-0">Dell</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <a th:href="@{/store(brand='logitech')}" class="text-decoration-none">
+                            <div class="tech-brand-card">
+                                <i class="fas fa-mouse fa-2x mb-2 text-warning"></i>
+                                <h6 class="fw-bold text-dark m-0">Logitech</h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Flash Sale Section -->
+            <section class="mb-5 bg-white p-4 rounded-4 shadow-sm border border-danger">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 border-bottom pb-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <h3 class="fw-bold text-danger m-0"><i class="fas fa-bolt me-2"></i>FLASH SALE TECH DEALS</h3>
+                        <span class="badge bg-dark px-3 py-2 fs-6">Kết thúc trong: <span id="countdown">08:45:20</span></span>
+                    </div>
+                    <a th:href="@{/store(promo='true')}" class="btn btn-outline-danger fw-bold btn-sm">Xem Tất Cả Deals <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Flash Sale Product 1 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm position-relative product-card">
+                            <span class="flash-sale-badge">-15%</span>
+                            <div class="p-4 text-center bg-light rounded-top">
+                                <i class="fas fa-mobile-alt fa-5x text-primary"></i>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge-tech-spec">A18 Pro</span>
+                                    <span class="badge-tech-spec">256GB</span>
+                                </div>
+                                <h6 class="card-title fw-bold">iPhone 16 Pro Max 256GB</h6>
+                                <p class="text-muted small">Màn hình Super Retina XDR 6.9 inch 120Hz</p>
+                                <div class="mt-auto">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="fw-bold text-danger fs-5">34.990.000 đ</span>
+                                        <small class="text-decoration-line-through text-muted">39.990.000 đ</small>
+                                    </div>
+                                    <a th:href="@{/detail(id=1)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-cart-plus me-1"></i>Xem Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flash Sale Product 2 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm position-relative product-card">
+                            <span class="flash-sale-badge">-20%</span>
+                            <div class="p-4 text-center bg-light rounded-top">
+                                <i class="fas fa-laptop fa-5x text-dark"></i>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge-tech-spec">M3 Max</span>
+                                    <span class="badge-tech-spec">36GB RAM</span>
+                                </div>
+                                <h6 class="card-title fw-bold">MacBook Pro 16" M3 Max</h6>
+                                <p class="text-muted small">Chip Apple M3 Max, SSD 1TB, Liquid Retina</p>
+                                <div class="mt-auto">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="fw-bold text-danger fs-5">59.990.000 đ</span>
+                                        <small class="text-decoration-line-through text-muted">72.990.000 đ</small>
+                                    </div>
+                                    <a th:href="@{/detail(id=2)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-cart-plus me-1"></i>Xem Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flash Sale Product 3 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm position-relative product-card">
+                            <span class="flash-sale-badge">-25%</span>
+                            <div class="p-4 text-center bg-light rounded-top">
+                                <i class="fas fa-headphones fa-5x text-success"></i>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge-tech-spec">ANC Chống Ồn</span>
+                                    <span class="badge-tech-spec">Pin 30H</span>
+                                </div>
+                                <h6 class="card-title fw-bold">Sony WH-1000XM5</h6>
+                                <p class="text-muted small">Tai nghe chụp tai không dây chống ồn cao cấp</p>
+                                <div class="mt-auto">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="fw-bold text-danger fs-5">7.990.000 đ</span>
+                                        <small class="text-decoration-line-through text-muted">9.990.000 đ</small>
+                                    </div>
+                                    <a th:href="@{/detail(id=3)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-cart-plus me-1"></i>Xem Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flash Sale Product 4 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm position-relative product-card">
+                            <span class="flash-sale-badge">-18%</span>
+                            <div class="p-4 text-center bg-light rounded-top">
+                                <i class="fas fa-clock fa-5x text-warning"></i>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge-tech-spec">Titan 49mm</span>
+                                    <span class="badge-tech-spec">Chống nước 100m</span>
+                                </div>
+                                <h6 class="card-title fw-bold">Apple Watch Ultra 2</h6>
+                                <p class="text-muted small">Vỏ Titan Siêu Bền, GPS Băng Tần Kép</p>
+                                <div class="mt-auto">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <span class="fw-bold text-danger fs-5">19.990.000 đ</span>
+                                        <small class="text-decoration-line-through text-muted">23.990.000 đ</small>
+                                    </div>
+                                    <a th:href="@{/detail(id=4)}" class="btn btn-primary w-100 fw-bold btn-sm"><i class="fas fa-cart-plus me-1"></i>Xem Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Tech Catalog Section -->
+            <section class="mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold m-0"><i class="fas fa-microchip text-primary me-2"></i>Sản Phẩm Công Nghệ Mới</h3>
+                    <a th:href="@{/store}" class="btn btn-link text-primary fw-bold text-decoration-none">Xem toàn bộ cửa hàng <i class="fas fa-chevron-right ms-1"></i></a>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Tech Item 5 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm product-card">
+                            <div class="p-4 text-center bg-light rounded-top">
+                                <i class="fas fa-tablet-alt fa-5x text-info"></i>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge-tech-spec">Chip M2</span>
+                                    <span class="badge-tech-spec">11 Inch</span>
+                                </div>
+                                <h6 class="card-title fw-bold">iPad Air 11" M2 Wi-Fi 128GB</h6>
+                                <p class="text-muted small">Thiết kế mỏng nhẹ, hỗ trợ Apple Pencil Pro</p>
+                                <div class="mt-auto">
+                                    <div class="fw-bold text-primary fs-5 mb-2">16.490.000 đ</div>
+                                    <a th:href="@{/detail(id=5)}" class="btn btn-outline-primary w-100 fw-bold btn-sm">Xem Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Item 6 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm product-card">
+                            <div class="p-4 text-center bg-light rounded-top">
+                                <i class="fas fa-gamepad fa-5x text-danger"></i>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge-tech-spec">i9-14900HX</span>
+                                    <span class="badge-tech-spec">RTX 4080</span>
+                                </div>
+                                <h6 class="card-title fw-bold">ASUS ROG Strix SCAR 18</h6>
+                                <p class="text-muted small">Màn hình ROG Nebula HDR 240Hz, RAM 32GB</p>
+                                <div class="mt-auto">
+                                    <div class="fw-bold text-primary fs-5 mb-2">78.990.000 đ</div>
+                                    <a th:href="@{/detail(id=6)}" class="btn btn-outline-primary w-100 fw-bold btn-sm">Xem Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Item 7 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm product-card">
+                            <div class="p-4 text-center bg-light rounded-top">
+                                <i class="fas fa-keyboard fa-5x text-warning"></i>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge-tech-spec">Mechanical</span>
+                                    <span class="badge-tech-spec">RGB Wireless</span>
+                                </div>
+                                <h6 class="card-title fw-bold">Bàn phím cơ Keychron Q1 Max</h6>
+                                <p class="text-muted small">Vỏ nhôm CNC, Gasket Mount, Swappable</p>
+                                <div class="mt-auto">
+                                    <div class="fw-bold text-primary fs-5 mb-2">4.890.000 đ</div>
+                                    <a th:href="@{/detail(id=7)}" class="btn btn-outline-primary w-100 fw-bold btn-sm">Xem Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Item 8 -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm product-card">
+                            <div class="p-4 text-center bg-light rounded-top">
+                                <i class="fas fa-mouse fa-5x text-secondary"></i>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="badge-tech-spec">8K DPI</span>
+                                    <span class="badge-tech-spec">Quiet Clicks</span>
+                                </div>
+                                <h6 class="card-title fw-bold">Chuột Logitech MX Master 3S</h6>
+                                <p class="text-muted small">Cảm biến cuộn MagSpeed, kết nối 3 thiết bị</p>
+                                <div class="mt-auto">
+                                    <div class="fw-bold text-primary fs-5 mb-2">2.490.000 đ</div>
+                                    <a th:href="@{/detail(id=8)}" class="btn btn-outline-primary w-100 fw-bold btn-sm">Xem Chi Tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech News Preview -->
+            <section class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold m-0"><i class="far fa-newspaper text-primary me-2"></i>Tin Tức Công Nghệ Nổi Bật</h3>
+                    <a th:href="@{/blog}" class="btn btn-link text-primary fw-bold text-decoration-none">Xem tất cả bài viết <i class="fas fa-chevron-right ms-1"></i></a>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="p-4 bg-primary bg-gradient text-white text-center rounded-top">
+                                <i class="fas fa-mobile-alt fa-3x"></i>
+                            </div>
+                            <div class="card-body">
+                                <small class="text-muted">27/07/2026 | Đánh giá thiết bị</small>
+                                <h5 class="card-title fw-bold mt-2">Đánh giá chi tiết iPhone 16 Pro Max sau 1 tháng sử dụng</h5>
+                                <p class="card-text text-muted small">Thiết kế viền siêu mỏng, thời lượng pin ấn tượng cùng hệ thống camera tele 5x...</p>
+                                <a th:href="@{/blog/1}" class="text-primary fw-bold text-decoration-none">Đọc tiếp <i class="fas fa-arrow-right ms-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="p-4 bg-dark bg-gradient text-white text-center rounded-top">
+                                <i class="fas fa-laptop fa-3x"></i>
+                            </div>
+                            <div class="card-body">
+                                <small class="text-muted">25/07/2026 | Tư vấn chọn mua</small>
+                                <h5 class="card-title fw-bold mt-2">Top 5 Laptop Gaming đáng mua nhất tầm giá 30 - 50 triệu</h5>
+                                <p class="card-text text-muted small">Tổng hợp các dòng Laptop trang bị RTX 4060, RTX 4070 mạnh mẽ nhất hiện nay...</p>
+                                <a th:href="@{/blog/2}" class="text-primary fw-bold text-decoration-none">Đọc tiếp <i class="fas fa-arrow-right ms-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="p-4 bg-success bg-gradient text-white text-center rounded-top">
+                                <i class="fas fa-headphones-alt fa-3x"></i>
+                            </div>
+                            <div class="card-body">
+                                <small class="text-muted">22/07/2026 | Công nghệ âm thanh</small>
+                                <h5 class="card-title fw-bold mt-2">So sánh tai nghe chống ồn Sony WH-1000XM5 vs AirPods Max</h5>
+                                <p class="card-text text-muted small">Đâu là chiếc tai nghe chống ồn không dây hoàn hảo nhất cho nhu cầu âm nhạc...</p>
+                                <a th:href="@{/blog/3}" class="text-primary fw-bold text-decoration-none">Đọc tiếp <i class="fas fa-arrow-right ms-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer Fragment -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

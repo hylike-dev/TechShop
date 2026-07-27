@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu TechShop - Hệ Thống Bán Lẻ Công Nghệ Chính Hãng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/index_style.css}">
+    <link rel="stylesheet" th:href="@{/css/about_us_style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <!-- Header Fragment -->
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main class="py-5 bg-light">
+        <div class="container">
+            <!-- Hero Banner -->
+            <div class="p-5 text-white bg-primary rounded-4 shadow-sm mb-5 text-center bg-gradient">
+                <i class="fas fa-microchip fa-4x mb-3 text-warning"></i>
+                <h1 class="display-5 fw-extrabold mb-3">Về Chúng Tôi - TechShop</h1>
+                <p class="fs-5 max-w-700 mx-auto opacity-90">Hệ thống bán lẻ các sản phẩm công nghệ hàng đầu tại Việt Nam, mang đến trải nghiệm mua sắm thiết bị chính hãng đỉnh cao.</p>
+            </div>
+
+            <!-- Core Values Grid -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-center">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h4 class="fw-bold mb-2">Chính Hãng 100%</h4>
+                        <p class="text-muted small mb-0">Tất cả sản phẩm iPhone, MacBook, Sony, ASUS đều được nhập khẩu chính ngạch, hóa đơn VAT đầy đủ và bảo hành ủy quyền.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-center">
+                        <i class="fas fa-shipping-fast fa-3x text-success mb-3"></i>
+                        <h4 class="fw-bold mb-2">Giao Hàng Siêu Tốc</h4>
+                        <p class="text-muted small mb-0">Đội ngũ vận chuyển nội thành Hà Nội & TP.HCM giao siêu hỏa tốc trong 2 giờ. Miễn phí vận chuyển toàn quốc đơn từ 500K.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-center">
+                        <i class="fas fa-headset fa-3x text-warning mb-3"></i>
+                        <h4 class="fw-bold mb-2">Hỗ Trợ Kỹ Thuật 24/7</h4>
+                        <p class="text-muted small mb-0">Đội ngũ kỹ thuật viên giàu kinh nghiệm tư vấn cấu hình, cài đặt phần mềm và hỗ trợ bảo hành tận tâm trọn đời.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Store Numbers Section -->
+            <div class="card border-0 shadow-sm p-5 rounded-4 bg-white text-center">
+                <h3 class="fw-bold mb-4">TechShop Qua Những Con Số</h3>
+                <div class="row g-4">
+                    <div class="col-6 col-md-3">
+                        <h2 class="display-6 fw-bold text-primary mb-1">50+</h2>
+                        <span class="text-muted small">Showroom trên toàn quốc</span>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <h2 class="display-6 fw-bold text-success mb-1">500.000+</h2>
+                        <span class="text-muted small">Khách hàng tin tưởng</span>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <h2 class="display-6 fw-bold text-warning mb-1">100%</h2>
+                        <span class="text-muted small">Bảo hành chính hãng</span>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <h2 class="display-6 fw-bold text-danger mb-1">24/7</h2>
+                        <span class="text-muted small">Chăm sóc khách hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Fragment -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
