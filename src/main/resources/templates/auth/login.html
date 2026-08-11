@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - TechShop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/index_style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .auth-card {
+            max-width: 450px;
+            margin: 0 auto;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- Header Fragment -->
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main class="py-5">
+        <div class="container">
+            <div class="card border-0 shadow-sm p-4 p-md-5 bg-white auth-card">
+                <div class="text-center mb-4">
+                    <i class="fas fa-microchip fa-3x text-primary mb-2"></i>
+                    <h3 class="fw-bold text-dark mb-1">Đăng Nhập TechShop</h3>
+                    <p class="text-muted small">Chào mừng bạn quay trở lại với hệ thống TechShop</p>
+                </div>
+
+                <form th:action="@{/login}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Tên tài khoản hoặc Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fas fa-user text-muted"></i></span>
+                            <input type="text" name="username" class="form-control" placeholder="techuser@gmail.com" value="techuser@gmail.com" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label small fw-bold">Mật khẩu</label>
+                            <a th:href="@{/auth/recover}" class="small text-primary text-decoration-none">Quên mật khẩu?</a>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fas fa-lock text-muted"></i></span>
+                            <input type="password" name="password" class="form-control" placeholder="••••••••" value="123456" required>
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                        <label class="form-check-label small text-muted" for="rememberMe">Ghi nhớ đăng nhập</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 fw-bold py-2.5 mb-3">Đăng Nhập Ngay</button>
+
+                    <div class="text-center small text-muted mb-3">Chưa có tài khoản TechShop? <a th:href="@{/register}" class="fw-bold text-primary text-decoration-none">Đăng ký ngay</a></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Fragment -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

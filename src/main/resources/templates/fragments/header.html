@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+<header class="site-header" th:fragment="header">
+    <div class="header-top">
+        <div class="container">
+            <div class="header-logo">
+                <a th:href="@{/}" class="logo" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+                    <i class="fas fa-microchip text-primary" style="font-size: 26px;"></i>
+                    <span style="font-weight: 800; font-size: 24px; color: #111; letter-spacing: -0.5px;">Tech<span style="color: #0d6efd;">Shop</span></span>
+                </a>
+            </div>
+
+            <div class="mobile-menu-toggle d-block d-md-none" style="font-size: 24px; cursor: pointer;" onclick="toggleMobileNav()">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <div class="header-center d-none d-md-flex">
+                <form class="search-form" th:action="@{/store}" method="get">
+                    <input type="text" name="search" placeholder="Tìm kiếm iPhone 16, MacBook, Smartwatch, Tai nghe..."
+                           th:value="${param.search}" required>
+                    <button type="submit" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="header-right d-none d-md-flex">
+                <a th:href="@{/admin}" class="admin-nav-link" title="Trang quản trị">
+                    <i class="fas fa-user-shield"></i>
+                </a>
+                
+                <a th:href="@{/login}" class="login-link" title="Đăng nhập">
+                    <i class="fas fa-sign-in-alt"></i> <span class="d-none d-lg-inline ms-1">Đăng nhập</span>
+                </a>
+
+                <a th:href="@{/user/profile}" class="account-link" title="Tài khoản cá nhân">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <a th:href="@{/cart}" class="cart-link" aria-label="Cart" title="Giỏ hàng">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-count" th:text="${cartCount != null ? cartCount : 3}">3</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="header-nav-bar">
+        <div class="container">
+            <nav class="header-nav">
+                <ul>
+                    <li>
+                        <a th:href="@{/}" th:classappend="${activeNav == 'home' ? 'active' : ''}">
+                            <i class="fas fa-home me-1"></i> Trang Chủ
+                        </a>
+                    </li>
+
+                    <li class="has-dropdown">
+                        <a th:href="@{/store}" th:classappend="${activeNav == 'store' ? 'active' : ''}">
+                            Sản Phẩm Công Nghệ
+                            <i class="fa-solid fa-caret-down"></i>
+                        </a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-grid">
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title"><i class="fas fa-mobile-alt me-2"></i>Điện Thoại</h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a th:href="@{/store(category='iphone')}" class="mega-menu-link">Apple iPhone</a></li>
+                                        <li><a th:href="@{/store(category='samsung')}" class="mega-menu-link">Samsung Galaxy</a></li>
+                                        <li><a th:href="@{/store(category='xiaomi')}" class="mega-menu-link">Xiaomi / Redmi</a></li>
+                                        <li><a th:href="@{/store(category='gaming-phone')}" class="mega-menu-link">Điện thoại Gaming</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title"><i class="fas fa-laptop me-2"></i>Laptop & PC</h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a th:href="@{/store(category='macbook')}" class="mega-menu-link">Apple MacBook Pro / Air</a></li>
+                                        <li><a th:href="@{/store(category='gaming-laptop')}" class="mega-menu-link">Laptop Gaming (ASUS ROG, MSI)</a></li>
+                                        <li><a th:href="@{/store(category='office-laptop')}" class="mega-menu-link">Laptop Văn Phòng (Dell, HP)</a></li>
+                                        <li><a th:href="@{/store(category='pc-workstation')}" class="mega-menu-link">PC Đồ Họa Workstation</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title"><i class="fas fa-headphones me-2"></i>Âm Thanh & Smartwatch</h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a th:href="@{/store(category='headphones')}" class="mega-menu-link">Tai nghe Bluetooth (Sony, AirPods)</a></li>
+                                        <li><a th:href="@{/store(category='speaker')}" class="mega-menu-link">Loa Bluetooth JBL, Marshall</a></li>
+                                        <li><a th:href="@{/store(category='smartwatch')}" class="mega-menu-link">Apple Watch / Galaxy Watch</a></li>
+                                        <li><a th:href="@{/store(category='garmin')}" class="mega-menu-link">Đồng hồ Thể thao Garmin</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="mega-menu-column">
+                                    <h4 class="mega-menu-title"><i class="fas fa-keyboard me-2"></i>Phụ Kiện Công Nghệ</h4>
+                                    <ul class="mega-menu-list">
+                                        <li><a th:href="@{/store(category='keyboard')}" class="mega-menu-link">Bàn phím cơ Custom & Keychron</a></li>
+                                        <li><a th:href="@{/store(category='mouse')}" class="mega-menu-link">Chuột không dây Logitech MX</a></li>
+                                        <li><a th:href="@{/store(category='monitor')}" class="mega-menu-link">Màn hình Gaming 4K 144Hz</a></li>
+                                        <li><a th:href="@{/store(category='charger')}" class="mega-menu-link">Sạc dự phòng & Cáp Anker</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/store(promo='true')}" th:classappend="${activeNav == 'promo' ? 'active' : ''}">
+                            <i class="fas fa-bolt text-warning me-1"></i> Khuyến Mãi Hot
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/blog}" th:classappend="${activeNav == 'blog' ? 'active' : ''}">
+                            <i class="far fa-newspaper me-1"></i> Tin Công Nghệ
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/about}" th:classappend="${activeNav == 'about' ? 'active' : ''}">
+                            <i class="fas fa-info-circle me-1"></i> Giới Thiệu
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+</body>
+</html>
