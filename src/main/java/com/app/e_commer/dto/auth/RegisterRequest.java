@@ -8,15 +8,20 @@ import lombok.Data;
 
 @Data
 public class RegisterRequest {
-    @NotBlank
-    @Size(min = 4, max = 30, message = "Username must be between 4 and 30 characters long")
-    @Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "Username can only contain alphanumeric characters, underscores, and hyphens")
-    private String username;
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$", message = "Password must be at least 8 characters long, include uppercase, lowercase, and special characters")
+    @NotBlank(message = "Họ và tên không được để trống")
+    @Size(min = 2, max = 50, message = "Họ và tên phải từ 2 đến 50 ký tự")
+    private String fullName;
+
+    @NotBlank(message = "Mật khẩu không được để trống")
+    @Size(min = 6, message = "Mật khẩu phải chứa ít nhất 6 ký tự")
     private String password;
-    @Email
+
+    @NotBlank(message = "Email không được để trống")
+    @Email(message = "Email không đúng định dạng")
     private String email;
-    @Pattern(regexp = "^0\\d{9,10}$", message = "Phone number must start with 0 and be 10-11 digits long")
+
+    @NotBlank(message = "Số điện thoại không được để trống")
+    @Pattern(regexp = "^0\\d{9,10}$", message = "Số điện thoại phải bắt đầu từ số 0 và có 10-11 chữ số")
     private String phone;
 
 }

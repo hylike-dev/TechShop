@@ -11,7 +11,7 @@ public class Cart {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id ;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id" , nullable = false)
     private User user ;
 
