@@ -30,25 +30,43 @@
                     <p class="text-muted small">Nhận ưu đãi độc quyền khi mua sắm thiết bị công nghệ</p>
                 </div>
 
-                <form th:action="@{/register}" method="post">
+                <!-- Alert hiển thị thông báo lỗi từ Service (ví dụ trùng Email) -->
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show small mb-3" role="alert">
+                    <i class="fas fa-exclamation-circle me-1"></i> <span th:text="${errorMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <form th:action="@{/register}" th:object="${registerRequest}" method="post">
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Họ và tên *</label>
-                        <input type="text" name="fullName" class="form-control" placeholder="Nguyễn Văn Tech" required>
+                        <input type="text" th:field="*{fullName}" class="form-control" 
+                               th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'" 
+                               placeholder="Nguyễn Văn Tech" required>
+                        <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" class="invalid-feedback small"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Email *</label>
-                        <input type="email" name="email" class="form-control" placeholder="techuser@gmail.com" required>
+                        <input type="email" th:field="*{email}" class="form-control" 
+                               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" 
+                               placeholder="techuser@gmail.com" required>
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback small"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Số điện thoại *</label>
-                        <input type="tel" name="phone" class="form-control" placeholder="0988777666" required>
+                        <input type="tel" th:field="*{phone}" class="form-control" 
+                               th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" 
+                               placeholder="0988777666" required>
+                        <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="invalid-feedback small"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Mật khẩu *</label>
-                        <input type="password" name="password" class="form-control" placeholder="Tối thiểu 6 ký tự" required>
+                        <input type="password" th:field="*{password}" class="form-control" 
+                               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" 
+                               placeholder="Tối thiểu 6 ký tự" required>
+                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback small"></div>
                     </div>
 
                     <div class="form-check mb-4">
